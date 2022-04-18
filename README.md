@@ -1,2 +1,19 @@
 # 2-factor-authentication-and-cloud
-A two factor authenticated cloud storage website. Allows users to upload their data with 2 authentication system.
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
