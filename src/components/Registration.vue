@@ -17,13 +17,15 @@
                     <label for="Password">Verify Password</label> <br>
                     <input type="password" v-model="rePassword" name="rePassword" required->
                 </div>
-                <input type="submit" @click="registerUser">
+                <input type="submit" @click="createFirebaseUser">
             </form>
         </div>
     </div>
 </template>
 
 <script>
+    import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
     export default {
         name: 'Registration',
         data() {
@@ -34,42 +36,28 @@
             }
         },
         methods: {
-            registerUser(e) {
-                const email = this.email;
-                const password = this.password;
-                const rePassword = this.rePassword;
+            createFirebaseUser(e){
+                e.preventDefault();
 
-                if( password != rePassword) {
-                    alert('Your Password is not same as Re entered password.')
+                if (this.password !== this.rePassword) {
+                    alert("Entered Passwords are not same.")
                     return false
                 }
-
-                const personData = {
-                    email: email,
-                    password: password,
-                }
-
-                // Save to Local Storage
-                if (email != null && password != null && rePassword != null ){
-                    this.saveTokenToLocalStorage(personData)
-                    alert('Congrats, You have successfully regitered.')
-                } else {
-                    alert('Please fill all the information')
-                }
-
-                // Redirect to Login Page -
-                this.$router.push({name: 'login'})
-            },
-            saveTokenToLocalStorage(personData){
-                let userData;
-                if (localStorage.getItem('User Data') === null){
-                    userData = []
-                } else {
-                    userData = JSON.parse(localStorage.getItem('User Data'))
-                }
-                userData.push(personData)
-                console.log(userData);
-                localStorage.setItem('User Data', JSON.stringify(userData))
+                
+                const auth = getAuth();
+                createUserWithEmailAndPassword(auth, this.email, this.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    alert("Congratulations you have successfully registered to iCloudStored")
+                    this.$router.push('/login')
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    
+                    alert(errorMessage)
+                });
             }
         }
     }

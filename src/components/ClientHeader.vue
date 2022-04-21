@@ -13,15 +13,30 @@
             </nav>
             <nav class="right">
                 <button class="primary">Profile</button>
-                <button class="btn-primary">Logout</button>
+                <button class="btn-primary" @click="logoutUser">Logout</button>
             </nav>
         </div>
     </header>
 </template>
 
 <script>
+    import { getAuth, signOut } from "firebase/auth";
+
     export default {
         name: 'ClientHeader',
+        methods: {
+            logoutUser() {
+                const auth = getAuth();
+                signOut(auth).then(() => {
+                    // Sign-out successful.
+                    alert('You have successfully logout.')
+                    this.$router.push({name: 'home'})
+                }).catch((error) => {
+                    // An error happened.
+                    alert(error)
+                });
+            }
+        }
     }
 </script>
 

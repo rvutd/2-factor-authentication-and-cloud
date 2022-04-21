@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import ClientView from '../views/ClientView.vue'
-
+import SecondAuthenticationView from "../views/SecondAuthenticationView.vue"
 
 const routes = [
   {
@@ -21,11 +21,15 @@ const routes = [
     name: 'registration',
     component: RegistrationView,
   },
-  ,
   {
     path: '/client',
     name: 'ClientView',
     component: ClientView,
+  },
+  {
+    path: '/secondAuthenticationView',
+    name: 'SecondAuthenticationView',
+    component: SecondAuthenticationView,
   }
 ]
 

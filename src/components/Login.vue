@@ -4,7 +4,7 @@
             <h1>Welcome Back!</h1>
         </div>
         <div>
-            <form onsubmit="#">
+            <form>
                 <div>
                     <label for="User Id">User Id:</label> <br>
                     <input type="email" v-model="email">
@@ -13,7 +13,7 @@
                     <label for="Password">Password</label> <br>
                     <input type="password" v-model="password">
                 </div>
-                <input type="submit" @click="autherizedUser">
+                <input type="submit" @click="authFirebaseUser">
             </form>
         </div>
     </div>
@@ -21,6 +21,9 @@
 
 
 <script>
+
+    import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
   export default {
     name: 'Login',
     data() {
@@ -30,22 +33,54 @@
         }
     },
     methods: {
-        autherizedUser(){
-            // Getting User Data Set and Sending it for verification -
-            const usersDataSet = JSON.parse(localStorage.getItem('User Data'))
-            const checkedData = usersDataSet.find(this.findUserInDataSet)
+        authFirebaseUser(e){
+            e.preventDefault();
+            
+            const auth = getAuth();
+                signInWithEmailAndPassword(auth, this.email, this.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
 
-            // Redirect User if Authenticated -
-            if (checkedData !== undefined){
-                this.$router.push({name: 'ClientView'})
-            } else {
-                alert('User not found, Please check details entered')
-            }
+                    // Get Verification Code & Send it on Email Id -
+                    const verifyCode = this.sendVerificationCode(e)
+
+                    // Save Creds for 2nd Authentication & further use -
+                    const userData = {
+                        email: user.email,
+                        token: user.accessToken,
+                        verifyCode: verifyCode,
+                    }
+
+                    localStorage.setItem('User Creds', JSON.stringify(userData))
+
+                    // Redirect for second verification -
+                    this.$router.push({name: 'SecondAuthenticationView'})
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
         },
-        findUserInDataSet(obj) {
-            if(obj.email === this.email && obj.password === this.password) {
-                return true
-            }
+        sendVerificationCode(e) {
+            e.preventDefault();
+            // Generates Code -
+            const verifyCode = Math.floor(100000 + Math.random() * 900000)
+            const subject = 'iCloudStorage 2 Factor Verification'
+            const msg = `Hello, here is your verification code ${verifyCode}`
+
+            // Send Email -
+            Email.send({
+                Host : "smtp.gmail.com",
+                Username : "iCloudStore.rvutd@gmail.com",
+                Password : "logIN@cloud",
+                To : this.email,
+                From : "iCloudStore.rvutd@gmail.com",
+                Subject : subject,
+                Body : msg,
+            }).catch(err => alert(err))
+
+            return verifyCode
         }
     },
   }
