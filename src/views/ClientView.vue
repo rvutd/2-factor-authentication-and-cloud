@@ -22,13 +22,12 @@
         },
         data() {
             return {
-                component: 'YourData',
+                component: 'Upload',
             }
         },
         methods: {
             changeComponent(newComponent) {
                 this.component = newComponent;
-                console.log(this.component, newComponent);
             }
         }
     }

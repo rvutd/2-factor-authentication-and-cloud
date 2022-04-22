@@ -42,6 +42,14 @@
       border-radius: 5px;
   }
 
+    .button {
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in;
+        border-radius: 5px;
+    }
+
   .container {
       max-width: 1000px;
       margin: 0 auto;
