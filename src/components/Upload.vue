@@ -26,10 +26,9 @@
             const inputTag = document.querySelector('#inputTag');
             const imageName = document.querySelector('#imageName')
 
-            console.log(inputTag, imageName);
-
             inputTag.addEventListener('change', () => {
                 imageName.style.display = 'block';
+                imageName.innerHTML = 'Title Changed'
             })
         }
     }
