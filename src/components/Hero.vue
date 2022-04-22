@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div>
-                <img src="../assets/cloud-backup-img.jpg" alt="hero image" />
+                <img src="../assets/iCloudStore.png" alt="iCloudStorage Image">
             </div>
         </div>
     </section>
@@ -43,6 +43,7 @@
         max-width: 900px;
         margin: 10rem auto;
         color: #333;
+        align-items: center;
     }
 
     .hero h1 {

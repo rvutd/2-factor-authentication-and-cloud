@@ -6,13 +6,12 @@
                     <li>
                         <h1>iCloudStore</h1>
                     </li>
-                    <li><a href="#" @click="$router.push('/')">Home</a></li>
-                    <li><a href="#features">Upload</a></li>
-                    <li><a href="#price">Your Data</a></li>
+                    <li><a href="#features" @click="$emit('component', 'Upload')">Upload</a></li>
+                    <li><a href="#price" @click="$emit('component', 'YourData')">Your Data</a></li>
                 </ul>
             </nav>
             <nav class="right">
-                <button class="primary">Profile</button>
+                <button class="primary" @click="$emit('component', 'Profile')">Profile</button>
                 <button class="btn-primary" @click="logoutUser">Logout</button>
             </nav>
         </div>
@@ -29,6 +28,7 @@
                 const auth = getAuth();
                 signOut(auth).then(() => {
                     // Sign-out successful.
+                    localStorage.setItem('User Creds', null)
                     alert('You have successfully logout.')
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
