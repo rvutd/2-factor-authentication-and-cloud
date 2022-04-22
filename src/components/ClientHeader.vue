@@ -6,8 +6,8 @@
                     <li>
                         <h1>iCloudStore</h1>
                     </li>
-                    <li><a href="#features" @click="$emit('component', 'Upload')">Upload</a></li>
-                    <li><a href="#price" @click="$emit('component', 'YourData')">Your Data</a></li>
+                    <li><a @click="$emit('component', 'Upload')">Upload</a></li>
+                    <li><a @click="$emit('component', 'YourData')">Your Data</a></li>
                 </ul>
             </nav>
             <nav class="right">

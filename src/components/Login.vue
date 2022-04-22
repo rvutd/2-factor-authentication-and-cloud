@@ -13,7 +13,7 @@
                     <label for="Password">Password</label> <br>
                     <input type="password" v-model="password">
                 </div>
-                <input type="submit" @click="authFirebaseUser">
+                <input type="submit" @click="authFirebaseUser" value="Login">
             </form>
         </div>
     </div>

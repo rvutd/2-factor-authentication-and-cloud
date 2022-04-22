@@ -17,7 +17,7 @@
                     <label for="Password">Verify Password</label> <br>
                     <input type="password" v-model="rePassword" name="rePassword" required->
                 </div>
-                <input type="submit" @click="createFirebaseUser">
+                <input type="submit" @click="createFirebaseUser" value="Register">
             </form>
         </div>
     </div>
