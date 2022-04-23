@@ -28,7 +28,7 @@
                 const auth = getAuth();
                 signOut(auth).then(() => {
                     // Sign-out successful.
-                    localStorage.setItem('User Creds', null)
+                    localStorage.clear()
                     alert('You have successfully logout.')
                     this.$router.push({name: 'home'})
                 }).catch((error) => {

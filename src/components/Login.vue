@@ -6,12 +6,12 @@
         <div>
             <form>
                 <div>
-                    <label for="User Id">User Id:</label> <br>
-                    <input type="email" v-model="email">
+                    <label for="User Id">Email Id:</label> <br>
+                    <input type="email" placeholder="johnDoe@gmail.com" v-model="email">
                 </div>
                 <div>
                     <label for="Password">Password</label> <br>
-                    <input type="password" v-model="password">
+                    <input type="password" placeholder="xyz^_89" v-model="password">
                 </div>
                 <input type="submit" @click="authFirebaseUser" value="Login">
             </form>
@@ -40,7 +40,6 @@
                 signInWithEmailAndPassword(auth, this.email, this.password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(user);
 
                     // Get Verification Code & Send it on Email Id -
                     const verifyCode = this.sendVerificationCode(e)
@@ -48,7 +47,7 @@
                     // Save Creds for 2nd Authentication & further use -
                     const userData = {
                         email: user.email,
-                        token: user.accessToken,
+                        uid: user.uid,
                         verifyCode: verifyCode,
                     }
 

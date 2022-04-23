@@ -4,8 +4,9 @@ import router from './router'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import * as firebase from 'firebase/app'
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDIm_8hM0QUxkIsU8qtnfgzrleWBqiWxR0",
@@ -19,5 +20,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const firebaseApp = initializeApp(firebaseConfig);
+const storage = getStorage(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 createApp(App).use(router).mount('#app')

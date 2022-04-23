@@ -3,42 +3,14 @@
         <div class="container">
             <!-- Data -->
             <div class="upper flex">
-                <h1>Ravindra's Data</h1>
-                <button class="btn-primary">Get Data</button>
+                <h1>{{this.firstName}}'s Images</h1>
+                <button id="getData" class="btn-primary" @click="getFiles">Get Data</button>
             </div>
             <div class="lower"> 
-                <div class="card">
-                    <img src="../assets/images/cosmos.png" alt="Your Data Image">
+                <div class="card" v-for="file in userFiles" :key="file.imgName">
+                    <img :src="file.imgSrc" alt="Your Data Image">
                     <div class="flex">
-                        <p>COSMOS</p>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/imgs.png" alt="Your Data Image">
-                    <div class="flex">
-                        <p>COSMOS</p>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/cosmos.png" alt="Your Data Image">
-                    <div class="flex">
-                        <p>COSMOS</p>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/imgs.png" alt="Your Data Image">
-                    <div class="flex title">
-                        <p>COSMOS</p>
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/cosmos.png" alt="Your Data Image">
-                    <div class="flex">
-                        <p>COSMOS</p>
+                        <p>{{ file.imgName }}</p>
                         <i class="fa-solid fa-trash"></i>
                     </div>
                 </div>
@@ -48,14 +20,47 @@
 </template>
 
 <script>
+    import { collection, getDocs, getFirestore } from "firebase/firestore"; 
+
     export default {
         name: 'YourData',
+        data() {
+            return {
+                firstName: '',
+                userFiles: [],
+            }
+        },
+        methods: {
+            getFiles() {
+                const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
+                const db = getFirestore();
+                
+                // Get User Data - FireStore
+                const docRef = collection(db, uid);
+                getDocs(docRef).then((data) => {
+                    let images;
+
+                    if (data.docs[0].data().images === null) {
+                        images = [];
+                    } else {
+                        images = data.docs[0].data().images;
+                    }
+                    
+                    localStorage.setItem('userFiles', JSON.stringify(images))
+                })
+            }
+        },
+        mounted() {
+            this.firstName = JSON.parse(localStorage.getItem('LoginUserData')).firstName;
+            this.userFiles = JSON.parse(localStorage.getItem('userFiles'))
+            this.getFiles()
+        }
     }
 </script>
 
 <style scoped>
     section {
-        margin: 10rem 0;
+        margin: 10rem 3rem;
         text-align: center;
     }
 
@@ -79,7 +84,8 @@
     }
 
     .container .lower {
-        display: grid;
+        display: flex;
+        flex-wrap: wrap;
         grid-template-columns: 1fr 1fr 1fr;
         margin-top: -20px;
     }
@@ -88,6 +94,7 @@
         margin: 30px;
         padding: 0;
         border-radius: 3px;
+        width: 19.5rem;
     }
 
     .card .flex {
@@ -108,10 +115,13 @@
 
     p {
         font-weight: bold;
+        color: #333;
     }
 
+    h1 { color: #333; }
+
     i {
-        color: #d9534f;
+        color: #da211a;
         cursor: pointer;
     }
 </style>

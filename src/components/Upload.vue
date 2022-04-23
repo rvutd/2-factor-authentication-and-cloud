@@ -12,24 +12,98 @@
             </form>
         </div>
         <div>
-        </div>
-        <div>
-            <input type="submit" class="btn-primary button">
+            <input type="submit" class="btn-primary button" @click="uploadDataToFirebase">
         </div>
     </section>
 </template>
 
 <script>
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+    import { collection, getDocs, doc , getFirestore, updateDoc } from "firebase/firestore"; 
+
     export default {
         name: 'Upload',
-        mounted() {
-            const inputTag = document.querySelector('#inputTag');
-            const imageName = document.querySelector('#imageName')
+        data() {
+            return {
+                files: [],
+            }
+        },
+        methods: {
+            async uploadDataToFirebase(e) {
+                e.preventDefault();
+                // Create a root reference
+                const storage = getStorage();
+                const fileName = this.files[0].name;
+                const uid = JSON.parse(localStorage.getItem('LoginUserData')).UID;
+                
+                // Create a reference to 'mountains.jpg'
+                const mountainsRef = ref(storage, `images/${fileName}`);
 
-            inputTag.addEventListener('change', () => {
+                // 'file' comes from the Blob or File API
+                const uploadbytes = await uploadBytes(mountainsRef, this.files[0]).then((snapshot) => {
+                    console.log('Uploading');
+                });
+
+                const pathReference = await ref(storage, `images/${uid}/${fileName}`);
+                this.saveImageToFireStore(fileName, storage)
+            },
+            saveImageToFireStore(fileName, storage) {
+                getDownloadURL(ref(storage, `images/${fileName}`))
+                .then((url) => {
+                    // Get Images from Store and push in images array -
+                    const db = getFirestore();
+                    const imgDetails = {
+                        imgName: fileName,
+                        imgSrc: url,
+                    }
+                    const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
+                    
+                    // Get User Data - FireStore
+                    const docRef = collection(db, uid);
+                    getDocs(docRef).then((data) => {
+                        let images;
+
+                        if (data.docs[0].data().images === null) {
+                            images = [];
+                        } else {
+                            images = data.docs[0].data().images;
+                        }
+                        
+                        images.push(imgDetails)
+
+                        // Update Iamges -
+                        const usersDataRef = doc(db, uid, data.docs[0].id);
+
+                        // Set the "capital" field of the city 'DC'
+                        updateDoc(usersDataRef, {
+                            images: images,
+                        });
+                        
+                        localStorage.setItem('userFiles', JSON.stringify(images))
+                        
+                        alert('Your Files Successfully Uploaded!')
+
+                        this.files = []
+                        imageName.innerHTML = 'Title of the Image'
+                    })
+                })
+                .catch((error) => {
+                    // Handle any errors
+                    console.error(error);
+                });
+            }
+        },
+        mounted() {
+            var inputTag = document.querySelector('#inputTag');
+            var imageName = document.querySelector('#imageName');
+
+            inputTag.addEventListener('change', (e) => {
+                this.files = e.target.files
+
                 imageName.style.display = 'block';
-                imageName.innerHTML = 'Title Changed'
+                imageName.innerHTML = `${this.files[0].name} is Selected`
             })
+
         }
     }
 </script>

@@ -7,27 +7,23 @@
         <div class="grid">
             <div class="flex">
                 <h3>First Name</h3>
-                <input type="text" value="Ravindra" disabled>
+                <input type="text" :value="firstName" disabled>
             </div>
             <div class="flex">
                 <h3>Last Name</h3>
-                <input type="text" value="Purohit" disabled>
+                <input type="text" :value="lastName" disabled>
             </div>
             <div class="flex">
                 <h3>iCloudStore Plan</h3>
-                <input type="text" value="Unlimited For 30 Days" disabled>
+                <input type="text" :value="storePlan" disabled>
             </div>
             <div class="flex">
                 <h3>Phone Number</h3>
-                <input type="text" value="+91 8756431062" disabled>
+                <input type="text" :value="phoneNumber" disabled>
             </div>
             <div class="flex">
                 <h3>Email Id</h3>
-                <input type="text" value="ravindrapurohit2011@gmail.com" disabled>
-            </div>
-            <div class="flex">
-                <h3>Password</h3>
-                <input type="text" value="hc-js47^_3" disabled>
+                <input type="text" :value="email" disabled>
             </div>
             <div class="flex">
                 <input type="submit" value="Reguest Edit" disabled>
@@ -39,6 +35,24 @@
 <script>
     export default {
         name: 'Profile',
+        data() {
+            return {
+                email: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                storePlan: '',
+            }
+        },
+        mounted() {
+            const userData = JSON.parse(localStorage.getItem('LoginUserData'))
+
+            this.email = userData.email;
+            this.firstName = userData.firstName;
+            this.lastName = userData.lastName;
+            this.phoneNumber = userData.phoneNumber;
+            this.storePlan = 'Default: Unlimited For 30 Days';
+        }
     }
 </script>
 

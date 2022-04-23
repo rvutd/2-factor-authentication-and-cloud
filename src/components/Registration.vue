@@ -5,17 +5,35 @@
         </div>
         <div>
             <form id="registrationForm">
+                <div class="flex">
+                    <div>
+                        <label for="User Id">First Name</label> <br>
+                        <input type="email" v-model="firstName" placeholder="John" required>
+                    </div>
+                    <div>
+                        <label for="User Id">Last Name</label> <br>
+                        <input type="email" v-model="lastName" placeholder="Doe" required>
+                    </div>
+                </div>
                 <div>
-                    <label for="User Id">Email Id:</label> <br>
-                    <input type="email" v-model="email" name="email" required>
+                    <label for="Email Id">Email Id:</label> <br>
+                    <input type="email" v-model="email" name="email" placeholder="johnDoe@gmail.com" required>
+                </div>
+                <div>
+                    <label for="Phone Number">Phone Number</label> <br>
+                    <input type="tel" v-model="phoneNumber" placeholder="+91 9874321650" required>
                 </div>
                 <div>
                     <label for="Password">Password</label> <br>
-                    <input type="password" v-model="password" name="password" required>
+                    <input type="password" v-model="password" placeholder="Enter atleast 8 digit password" required>
                 </div>
                 <div>
-                    <label for="Password">Verify Password</label> <br>
-                    <input type="password" v-model="rePassword" name="rePassword" required->
+                    <label for="Verify Password">Verify Password</label> <br>
+                    <input type="password" v-model="rePassword" placeholder="Re-Enter above password" required>
+                </div>
+                <div>
+                    <label for="Cloud Store Plan">iCloudStore Plan</label> <br>
+                    <input type="text" value="Default: Unlimited For 30 Days" disabled>
                 </div>
                 <input type="submit" @click="createFirebaseUser" value="Register">
             </form>
@@ -25,7 +43,8 @@
 
 <script>
     import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+    import { collection, addDoc, getFirestore } from "firebase/firestore"; 
+    
     export default {
         name: 'Registration',
         data() {
@@ -33,13 +52,20 @@
                 email: this.email,
                 password: this.password,
                 rePassword: this.rePassword,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                phoneNumber: this.phoneNumber,
+                storePlan: 'Basic',
             }
         },
         methods: {
-            createFirebaseUser(e){
+            async createFirebaseUser(e){
                 e.preventDefault();
 
-                if (this.password !== this.rePassword) {
+                if (this.phoneNumber.length !== 10) {
+                    alert('Please Enter a valid number!')
+                    return false
+                } else if (this.password !== this.rePassword) {
                     alert("Entered Passwords are not same.")
                     return false
                 }
@@ -48,16 +74,38 @@
                 createUserWithEmailAndPassword(auth, this.email, this.password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(user);
+
+                    this.saveUserDataToFiresStore(user)
+
                     alert("Congratulations you have successfully registered to iCloudStored")
                     this.$router.push('/login')
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
                     const errorMessage = error.message;
-                    
                     alert(errorMessage)
                 });
+            },
+            async saveUserDataToFiresStore(user) {
+
+                const userData = {
+                    UID: user.uid,
+                    userToken: user.accessToken,
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    fullName: this.firstName + " " + this.lastName,
+                    phoneNumber: this.phoneNumber,
+                    storePlan: this.storePlan,
+                    images: null,
+                }
+
+                // Save Data To FireStore -
+                const db = getFirestore()
+                try {
+                    const docRef = await addDoc(collection(db, user.uid), userData);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
             }
         }
     }
@@ -78,7 +126,8 @@
         font-size: 20px;
         font-weight: bold;
     }
-    input[type=email], input[type=password] {
+    input[type=email], input[type=password],
+    input[type=tel], input[type=text] {
         width: 100%;
         padding: 12px 20px;
         margin: 8px 0;
@@ -99,5 +148,9 @@
     }
     input[type=submit]:hover {
         background-color: #45a049;
+    }
+
+    #registrationForm .flex div:nth-child(1) {
+        margin-right: 30px;
     }
 </style>

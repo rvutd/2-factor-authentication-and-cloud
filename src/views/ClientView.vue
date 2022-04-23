@@ -10,7 +10,7 @@
     import Profile from "../components/Profile.vue"
     import YourData from "../components/YourData.vue"
     import Upload from "../components/Upload.vue"
-
+    import { collection, getDocs ,getFirestore } from "firebase/firestore"; 
 
     export default {
         name: 'ClientView',
@@ -28,7 +28,20 @@
         methods: {
             changeComponent(newComponent) {
                 this.component = newComponent;
+            },
+            async getUserDataFromFireStore() {
+                const db = getFirestore();
+                const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
+                
+                // Get User Data - FireStore
+                const docRef = collection(db, uid);
+                getDocs(docRef).then((data) => {    
+                    localStorage.setItem('LoginUserData', JSON.stringify(data.docs[0].data()))                    
+                })
             }
+        },
+        mounted() {
+            this.getUserDataFromFireStore()
         }
     }
 </script>
