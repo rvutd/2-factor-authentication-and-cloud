@@ -1,7 +1,10 @@
 <template>
     <footer>
         <div class="container">
-            <p>Made with <i class="fa-solid fa-heart"></i> by <a href="https://github.com//rvutd" target="_blank">rvutd</a></p>
+            <p>Made with <i class="fa-solid fa-heart"></i> by 
+            <a href="https://github.com//rvutd" target="_blank">rvutd</a> & 
+            <a href="https://github.com//shubhsonixp" target="_blank">shubh</a>
+            </p>
         </div>
     </footer>
 </template>

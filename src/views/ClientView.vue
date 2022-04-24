@@ -1,7 +1,7 @@
 <template>
     <div>
         <ClientHeader @component='changeComponent' />
-        <component :is="component"></component>
+        <component @component='changeComponent' :is="component"></component>
     </div>
 </template>
 

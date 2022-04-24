@@ -2,13 +2,13 @@
     <section class="flex">
         <h3 for="Heading">Choose Files You Want To Upload</h3>
         <div>
-            <form>
+            <form id="uploadForm">
                 <label for="inputTag">
                     Select Image
                     <input id="inputTag" type="file">
                     <br>
                 </label>
-                <span id="imageName">Title of the Image</span>
+                <span id="imageName">Title of the Image</span><br>
             </form>
         </div>
         <div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+    import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
     import { collection, getDocs, doc , getFirestore, updateDoc } from "firebase/firestore"; 
 
     export default {
@@ -36,19 +36,35 @@
                 const fileName = this.files[0].name;
                 const uid = JSON.parse(localStorage.getItem('LoginUserData')).UID;
                 
-                // Create a reference to 'mountains.jpg'
-                const mountainsRef = ref(storage, `images/${fileName}`);
+                const storageRef = ref(storage, `${uid}/${fileName}`)
 
-                // 'file' comes from the Blob or File API
-                const uploadbytes = await uploadBytes(mountainsRef, this.files[0]).then((snapshot) => {
-                    console.log('Uploading');
-                });
+                const metaData = {
+                    contentType: this.files[0].type
+                }
 
-                const pathReference = await ref(storage, `images/${uid}/${fileName}`);
-                this.saveImageToFireStore(fileName, storage)
+                // Reference To Storage - File - File Type
+                const uploadBytesRes = uploadBytesResumable(storageRef, this.files[0], metaData)
+                
+                const uploadForm = document.querySelector('#uploadForm');
+                let progressBar = document.createElement('progress');
+                progressBar.max = 100
+
+                uploadForm.appendChild(progressBar)
+                // Upload To Firebase Storage
+                const waitForIt = uploadBytesRes.on('state_changed', (snapshot) => {
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    progressBar.value = progress
+
+                    if (progress === 100) {
+                        this.files = []
+                        imageName.innerHTML = 'Title of the Image'
+                        alert("Your file has been uploaded. Successfully!")
+                        this.saveImageToFireStore(fileName, storage, uid).then(this.$emit('component', 'YourData'))
+                    }
+                })
             },
-            saveImageToFireStore(fileName, storage) {
-                getDownloadURL(ref(storage, `images/${fileName}`))
+            async saveImageToFireStore(fileName, storage, uid) {
+                getDownloadURL(ref(storage, `${uid}/${fileName}`))
                 .then((url) => {
                     // Get Images from Store and push in images array -
                     const db = getFirestore();
@@ -80,16 +96,11 @@
                         });
                         
                         localStorage.setItem('userFiles', JSON.stringify(images))
-                        
-                        alert('Your Files Successfully Uploaded!')
-
-                        this.files = []
-                        imageName.innerHTML = 'Title of the Image'
                     })
                 })
                 .catch((error) => {
                     // Handle any errors
-                    console.error(error);
+                    alert(error);
                 });
             }
         },

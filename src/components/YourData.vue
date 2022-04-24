@@ -47,10 +47,12 @@
                     }
                     
                     localStorage.setItem('userFiles', JSON.stringify(images))
+
+                    return this.userFiles = images
                 })
             }
         },
-        mounted() {
+        created() {
             this.firstName = JSON.parse(localStorage.getItem('LoginUserData')).firstName;
             this.userFiles = JSON.parse(localStorage.getItem('userFiles'))
             this.getFiles()

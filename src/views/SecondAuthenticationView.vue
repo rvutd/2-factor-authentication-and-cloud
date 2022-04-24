@@ -18,7 +18,6 @@
         methods: {
             verifyAuthCode(e) {
                 e.preventDefault();
-                console.log(this.verifyCode, this.enteredCode);
                 if (this.verifyCode === Number(this.enteredCode)){
                     alert('Authentication Successfull!, You will be redirected to Dashboard.')
                     this.$router.push({name: 'ClientView'})
@@ -38,7 +37,6 @@
             const data = JSON.parse(localStorage.getItem('User Creds'));
             this.email = data.email;
             this.verifyCode = data.verifyCode
-            console.log(this.email, this.verifyCode);
 
             window.addEventListener('load', ()=> {
                 window.addEventListener('beforeunload', () => {
