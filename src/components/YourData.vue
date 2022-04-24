@@ -11,7 +11,7 @@
                     <img :src="file.imgSrc" alt="Your Data Image">
                     <div class="flex">
                         <p>{{ file.imgName }}</p>
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash" @click="deleteFile(file.imgName)"></i>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,8 @@
 </template>
 
 <script>
-    import { collection, getDocs, getFirestore } from "firebase/firestore"; 
+    import { collection, getDocs, getFirestore, updateDoc, doc } from "firebase/firestore"; 
+    import { getStorage, ref, deleteObject } from "firebase/storage";
 
     export default {
         name: 'YourData',
@@ -31,6 +32,48 @@
             }
         },
         methods: {
+            deleteFile(removeImg){
+                // Remove Local Storage -
+                this.userFiles = this.userFiles.filter(file => file.imgName !== removeImg);
+
+                // Remove From Firestore -
+                const db = getFirestore();
+                const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
+                
+                // Get User Data - FireStore
+                const docRef = collection(db, uid);
+                getDocs(docRef).then((data) => {
+                    // When last image is left in db is should be null
+                    // rather than be empty array -
+                    let images
+                    if (this.userFiles.length !== 0) {
+                        images = this.userFiles
+                    } else {
+                        images = null
+                    }
+
+                    // Update Images -
+                    const usersDataRef = doc(db, uid, data.docs[0].id);
+
+                    updateDoc(usersDataRef, {
+                        images: images,
+                    });
+                });
+
+                // Remove from Fire Storage -
+                const storage = getStorage();
+
+                // Create a reference to the file to delete
+                const desertRef = ref(storage, `${uid}/${removeImg}`);
+
+                // Delete the file
+                deleteObject(desertRef).then(() => {
+                    // File deleted successfully
+                    console.log('File deleted successfully!');
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
             getFiles() {
                 const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
                 const db = getFirestore();
