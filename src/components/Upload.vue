@@ -64,6 +64,9 @@
                 })
             },
             async saveImageToFireStore(fileName, storage, uid) {
+                setTimeout(()=> {
+                    console.log('tiimeout');
+                }, 5000)
                 getDownloadURL(ref(storage, `${uid}/${fileName}`))
                 .then((url) => {
                     // Get Images from Store and push in images array -

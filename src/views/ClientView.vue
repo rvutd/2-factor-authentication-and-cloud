@@ -10,6 +10,7 @@
     import Profile from "../components/Profile.vue"
     import YourData from "../components/YourData.vue"
     import Upload from "../components/Upload.vue"
+    import Support from "../components/Support.vue"
     import { collection, getDocs ,getFirestore } from "firebase/firestore"; 
 
     export default {
@@ -19,6 +20,7 @@
             Profile,
             YourData,
             Upload,
+            Support,
         },
         data() {
             return {
@@ -28,6 +30,7 @@
         methods: {
             changeComponent(newComponent) {
                 this.component = newComponent;
+                console.log(this.component);
             },
             async getUserDataFromFireStore() {
                 const db = getFirestore();

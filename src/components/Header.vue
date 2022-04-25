@@ -7,8 +7,8 @@
                         <h1>iCloudStore</h1>
                     </li>
                     <li><a href="#" @click="this.$router.push({ name: 'home' })">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#price">Pricing</a></li>
+                    <li><a href="#features" @click="this.$router.push({name: 'home'})">Features</a></li>
+                    <li><a href="#price" @click="this.$router.push({name: 'home'})">Pricing</a></li>
                 </ul>
             </nav>
             <nav class="right">
