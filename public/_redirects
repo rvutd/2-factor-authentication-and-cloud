@@ -1,11 +1,6 @@
-[[redirects]]
-  from = "/"
-  to = "/login"
-  status = 301
-  force = false
+# Redirects from what the browser requests to what we serve
+/   /login
+/   /registration
+/   /client
+/   /secondAuthenticationView
 
-[[redirects]]
-  from = "/"
-  to = "/registration"
-  status = 301
-  force = false

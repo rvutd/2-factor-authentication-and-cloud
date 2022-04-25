@@ -15,9 +15,9 @@
                         <button class="green">Enterprise Javascript Developer</button>
                     </div>
                     <ul class="flex">
-                        <li><i class="fa-brands fa-linkedin"></i></li>
-                        <li><i class="fa-brands fa-instagram"></i></li>
-                        <li><i class="fa-brands fa-github"></i></li>
+                        <li><a href="https://www.linkedin.com/in/rvutd/" target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+                        <li><a href="https://www.instagram.com/rv_utd/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://github.com/rvutd" target="_blank"><i class="fa-brands fa-github"></i></a></li>
                     </ul>
                     <p>
                         A self-introduction should include your name and occupation 
@@ -32,13 +32,13 @@
                     <h1>Shubham Verma</h1>
                     <div>
                         <button class="red">iCloudStore CFO</button>
-                        <button class="yellow">Tata Consultant Survice</button>
+                        <button class="yellow">Tata Consultant Service</button>
                         <button class="green">Assistant System Enginner</button>
                     </div>
                     <ul class="flex">
-                        <li><i class="fa-brands fa-linkedin"></i></li>
-                        <li><i class="fa-brands fa-instagram"></i></li>
-                        <li><i class="fa-brands fa-github"></i></li>
+                        <li><a href="https://www.linkedin.com/in/shubhsonixp/" target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+                        <li><a href="https://www.instagram.com/s.soni2806/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://github.com/shubhsonixp" target="_blank"><i class="fa-brands fa-github"></i></a></li>
                     </ul>
                     <p>
                         A self-introduction should include your name and occupation 

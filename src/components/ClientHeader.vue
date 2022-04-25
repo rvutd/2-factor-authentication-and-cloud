@@ -68,6 +68,7 @@
 
     .navBar a {
         transition: all 0.3s ease-in;
+        cursor: pointer;
     }
 
     .navBar a:hover {
