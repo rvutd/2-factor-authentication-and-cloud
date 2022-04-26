@@ -58,14 +58,13 @@
                     if (progress === 100) {
                         this.files = []
                         imageName.innerHTML = 'Title of the Image'
-                        alert("Your file has been uploaded. Successfully!")
                         this.saveImageToFireStore(fileName, storage, uid).then(this.$emit('component', 'YourData'))
                     }
                 })
             },
             async saveImageToFireStore(fileName, storage, uid) {
                 setTimeout(()=> {
-                    console.log('tiimeout');
+                    console.log('timer');
                 }, 5000)
                 getDownloadURL(ref(storage, `${uid}/${fileName}`))
                 .then((url) => {
@@ -165,4 +164,12 @@
         padding: 10px 30px;
     }    
     
+        /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .flex {
+            margin: 14rem 20px;
+            max-width: fit-content;
+        }
+
+    }
 </style>

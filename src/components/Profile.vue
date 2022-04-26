@@ -91,7 +91,7 @@
     }
 
     input[type=text], input[type=password] {
-        width: 15rem;
+        max-width: 15rem;
         padding: 12px 20px;
         margin: 8px 0;
         display: inline-block;
@@ -106,7 +106,7 @@
     }
 
     input[type=submit] {
-        width: 20rem;
+        max-width: 20rem;
         background-color: #f0ad4e;
         color: white;
         padding: 14px 20px;
@@ -121,5 +121,21 @@
         height: 17rem;
         width: 20rem;
     }
+
+        /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        section {
+            margin: 14rem 20px;
+        }
+
+        .grid {
+            padding: 20px 10px;
+        }
+
+        h3 {
+            font-size: 15px;
+        }
+    }
+
 </style>
 

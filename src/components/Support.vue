@@ -54,7 +54,6 @@
                 </div>
             </article>
         </div>
-        <Footer />
     </section>    
 </template>
 
@@ -137,5 +136,33 @@
 
     p {
         color: #333;
+    }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        section {
+            margin: 13rem 0;
+        }
+
+        .flex {
+            flex-wrap: wrap;
+            place-items: center;
+        }
+
+        .card {
+            margin: 2rem auto;
+        }
+
+        .content, .content-2 {
+            margin: 0 40px;
+        }
+
+        .content *, .content-2 * {
+            margin: 5px 0;
+        }
+
+        li a {
+            padding-right: 10px;
+        }
     }
 </style>

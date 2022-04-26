@@ -45,4 +45,17 @@
         color: rgb(122, 118, 118);
         font-weight: 300;
     }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .speciality {
+            padding: 50px;
+            margin-top: -150px;
+        }
+
+        .container {
+            grid-template-columns: 1fr;
+            row-gap: 30px;
+        }
+    }
 </style>

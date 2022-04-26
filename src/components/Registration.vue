@@ -153,4 +153,12 @@
     #registrationForm .flex div:nth-child(1) {
         margin-right: 30px;
     }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .container {
+            margin: 5rem 20px;
+            margin-top: 14rem;
+        }
+    }
 </style>

@@ -19,7 +19,6 @@
             verifyAuthCode(e) {
                 e.preventDefault();
                 if (this.verifyCode === Number(this.enteredCode)){
-                    alert('Authentication Successfull!, You will be redirected to Dashboard.')
                     this.$router.push({name: 'ClientView'})
                 } else {
                     alert('Entered Verification Code is Wrong')

@@ -105,4 +105,19 @@
     .pricing .card:nth-child(3) {
         border-color: #5cb85c;
     }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .container .flex {
+            flex-wrap: wrap;
+        }
+
+        .container h1 {
+            margin-left: 20px;
+        }
+
+        .flex .card {
+            margin: 1.5rem auto;
+        }
+    }
 </style>

@@ -30,7 +30,6 @@
         methods: {
             changeComponent(newComponent) {
                 this.component = newComponent;
-                console.log(this.component);
             },
             async getUserDataFromFireStore() {
                 const db = getFirestore();

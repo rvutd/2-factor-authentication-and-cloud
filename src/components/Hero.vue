@@ -1,7 +1,7 @@
 <template>
     <section class="hero">
         <div class="container grid grid-2">
-            <div>
+            <div class="div1">
                 <div class="my-1">
                     <h1>Store Data on Cloud.</h1>
                     <h1>Better than Ever.</h1>
@@ -69,5 +69,37 @@
         border-radius: 5px;
         font-size: 12px;
         border: 1px solid rgb(134, 134, 134);
+    }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 870px) {
+        section {
+            padding: 0 25px;
+            margin-top: 200px;
+        }
+
+        .container {
+            grid-template-columns: repeat(1, 1fr);
+            place-items: center;
+        }
+
+        .container .div1 {
+            max-width: 500px;
+        }
+
+        .container img {
+            max-width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .div1 h1 { font-size: 30px;}
+    }
+
+    @media only screen and (max-width: 400px) {
+        .container img {
+            width: 300px;
+            height: 300px;
+        }
     }
 </style>

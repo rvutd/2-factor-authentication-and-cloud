@@ -30,7 +30,6 @@
                 signOut(auth).then(() => {
                     // Sign-out successful.
                     localStorage.clear()
-                    alert('You have successfully logout.')
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
                     // An error happened.
@@ -77,5 +76,17 @@
 
     .navBar button {
         margin: 0.3rem;
+    }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .container {
+            flex-wrap: wrap;
+            place-items: center;
+        }
+
+        ul {
+            flex-wrap: wrap;
+        }
     }
 </style>

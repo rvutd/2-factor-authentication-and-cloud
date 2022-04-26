@@ -169,4 +169,19 @@
         color: #da211a;
         cursor: pointer;
     }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        section {
+            margin: 14rem 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+        }
+
+        .container {
+            padding: 20px 0;
+        }
+    }
 </style>

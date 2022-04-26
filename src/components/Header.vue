@@ -61,4 +61,16 @@
     .navBar button {
         margin: 0.3rem;
     }
+
+    /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .container {
+            flex-wrap: wrap;
+            place-items: center;
+        }
+
+        ul {
+            flex-wrap: wrap;
+        }
+    }
 </style>
