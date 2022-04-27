@@ -51,31 +51,37 @@
 
                 uploadForm.appendChild(progressBar)
                 // Upload To Firebase Storage
-                const waitForIt = uploadBytesRes.on('state_changed', (snapshot) => {
+                const waitForIt = await uploadBytesRes.on('state_changed', (snapshot) => {
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     progressBar.value = progress
 
                     if (progress === 100) {
+                        this.saveImageToFireStore(fileName, storage, uid)
                         this.files = []
                         imageName.innerHTML = 'Title of the Image'
-                        alert("Your file has been uploaded. Successfully!")
-                        this.saveImageToFireStore(fileName, storage, uid).then(this.$emit('component', 'YourData'))
+                        this.$emit('component', 'YourData')
                     }
                 })
             },
             async saveImageToFireStore(fileName, storage, uid) {
-                setTimeout(()=> {
-                    console.log('tiimeout');
-                }, 5000)
                 getDownloadURL(ref(storage, `${uid}/${fileName}`))
                 .then((url) => {
+                    const xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob'
+                        xhr.Accept = "*/*";
+
+                        xhr.onload = (event) => {
+                        const blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+
                     // Get Images from Store and push in images array -
                     const db = getFirestore();
                     const imgDetails = {
                         imgName: fileName,
                         imgSrc: url,
                     }
-                    const uid = JSON.parse(localStorage.getItem('User Creds')).uid;
                     
                     // Get User Data - FireStore
                     const docRef = collection(db, uid);
@@ -87,7 +93,7 @@
                         } else {
                             images = data.docs[0].data().images;
                         }
-                        
+
                         images.push(imgDetails)
 
                         // Update Iamges -
@@ -101,9 +107,9 @@
                         localStorage.setItem('userFiles', JSON.stringify(images))
                     })
                 })
-                .catch((error) => {
+                .catch((err) => {
                     // Handle any errors
-                    alert(error);
+                    console.error(err);
                 });
             }
         },
@@ -165,4 +171,12 @@
         padding: 10px 30px;
     }    
     
+        /* Reponsive Styles */
+    @media only screen and (max-width: 590px) {
+        .flex {
+            margin: 14rem 20px;
+            max-width: fit-content;
+        }
+
+    }
 </style>
