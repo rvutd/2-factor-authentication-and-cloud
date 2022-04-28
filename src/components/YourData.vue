@@ -156,6 +156,11 @@
         cursor: pointer;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
+        transition: all .3s ease;
+    }
+
+    img:hover {
+        transform: scale(1.02, 1.02);
     }
 
     p {

@@ -8,36 +8,36 @@
                     <div class="my-1">
                         <h4>STANDARD</h4>
                         <h2>US $15</h2>
-                        <p>/ user / month, starting from 3 users</p>
+                        <p>/ user / month, starting from 1 user</p>
                     </div>
                     <div class="line"></div>
                     <div class="my-1">
-                        <i></i><p class="my-1">5 TB (5,000 GB) of space for secure storage</p>
+                        <i></i><p class="my-1">1 GB (5,000 MB) of space for secure storage</p>
                         <i></i><p>Easy-to-use sharing and collaboration tools</p>
                     </div>
                     <div>
-                        <button class="white">Try for 30 days</button>
+                        <button class="white" @click="this.$router.push({ name: 'registration'})">Try for 30 days</button>
                     </div>
                     <div>
-                        <p class="my-1">or <a href="#">purchase now</a></p>
+                        <p class="my-1">or <a href="#" @click="this.$router.push({ name: 'registration'})">purchase now</a></p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="my-1">
                         <h4>ADVANCE</h4>
                         <h2>US $25</h2>
-                        <p>/ user / month, starting from 3 users</p>
+                        <p>/ user / month, starting from 3 user</p>
                     </div>
                     <div class="line"></div>
                     <div class="my-1">
-                        <i></i><p class="my-1">As much space as your team needs</p>
-                        <i></i><p>Sophisticated control and security features</p>
+                        <i></i><p class="my-1">5GB of space secure storage with benefits</p>
+                        <i></i><p>Sophisticated controls and security features</p>
                     </div>
                     <div>
-                        <button class="white">Try for 30 days</button>
+                        <button class="white" @click="this.$router.push({ name: 'registration'})">Try for 30 days</button>
                     </div>
                     <div>
-                        <p class="my-1">or <a href="#">purchase now</a></p>
+                        <p class="my-1">or <a href="#" @click="this.$router.push({ name: 'registration'})">purchase now</a></p>
                     </div>
                 </div>
                 <div class="card">
@@ -52,10 +52,10 @@
                         <i></i><p>Individualised support to help admins manage at scale</p>
                     </div>
                     <div>
-                        <button class="white">Try for 30 days</button>
+                        <button class="white" @click="this.$router.push({ name: 'registration'})">Try for 30 days</button>
                     </div>
                     <div>
-                        <p class="my-1">or <a href="#">purchase now</a></p>
+                        <p class="my-1">or <a @click="this.$router.push({ name: 'registration'})">purchase now</a></p>
                     </div>
                 </div>
             </div>

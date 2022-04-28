@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <label for="Cloud Store Plan">iCloudStore Plan</label> <br>
-                    <input type="text" value="Default: Unlimited For 30 Days" disabled>
+                    <input id="disabled" type="text" value="Default: Unlimited For 30 Days" disabled>
                 </div>
                 <input type="submit" @click="createFirebaseUser" value="Register">
             </form>
@@ -154,6 +154,9 @@
         margin-right: 30px;
     }
 
+    #disabled {
+        cursor: no-drop;
+    }
     /* Reponsive Styles */
     @media only screen and (max-width: 590px) {
         .container {
